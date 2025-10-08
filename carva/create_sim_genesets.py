@@ -47,7 +47,34 @@ def add_noise_to_gene_set(gene_set, relevance, background, all_subset_genes, net
         raise NotImplementedError('Only degree background is implemented')
     return out_gene_set + noise_genes
 
-        
+
+def add_noise_to_gene_set_quant(gene_profile, relevance, background, all_subset_genes, netnodefile=None):
+    n_to_replace = int(len(gene_profile)*(1 - relevance))
+    replace_genes = rn.sample(list(gene_profile.keys()), n_to_replace)
+    replace_scores = [i for i in list(gene_profile.values())]
+    out_gene_set = {x:score for x, score in gene_profile.items() if x not in replace_genes}
+    if background == 'degree':
+        degree_file = netnodefile.replace('nodelist.txt', 'degrees.txt')
+        degrees = pd.read_csv(degree_file, header=None, sep='\t', index_col=0)
+        degree_bins = get_degree_bins(degrees)
+        degree_bins.index.name=None
+        # drop the genes that are already in the gene set
+        noise_bins = degree_bins[~degree_bins.index.isin(all_subset_genes)].copy()
+        noise_genes = []
+        for gene in replace_genes:
+            try:
+                add_gene = get_matched_gene(degree_bins.loc[gene]['bin'], noise_bins)
+                noise_genes.append(add_gene)
+            # make sure this gene cannot be selected again
+                noise_bins = noise_bins.drop(index=add_gene)
+            except KeyError:
+                pass # gene not in network                
+        noise_scores = {x: replace_scores[i] for i, x in enumerate(noise_genes)}
+    else:
+        raise NotImplementedError('Only degree background is implemented')
+    return {**out_gene_set, **noise_scores}
+
+
 def get_matched_gene(gene_bin, bin_data):
     possible_genes = bin_data[bin_data['bin'] == gene_bin].index
     return rn.choice(possible_genes)
@@ -81,6 +108,11 @@ def write_simulated_geneset(geneset, outdir, setname, set_number, overlap, relev
     with open(outfile, 'w') as out:
         out.write('\n'.join([str(x) for x in geneset]))
         
+def write_simulated_geneset_quant(geneset, outdir, setname, set_number, overlap, relevance, total_genes, repeat, background):
+    outfile = os.path.join(outdir, f'{setname}_overlap{overlap}_relevance{relevance}_totalgenes{total_genes}_repeat{repeat}_background{background}_{set_number}.txt')
+    out_df = pd.DataFrame({'P-value': geneset}).reset_index(names='Entrez')
+    out_df.to_csv(outfile, sep='\t', index=False)
+        
 
 def check_genesets_against_network(genesets, network_node_file):
     network_nodes = set(pd.read_csv(network_node_file, header=None, sep='\t')[0])
@@ -92,7 +124,7 @@ def check_genesets_against_network(genesets, network_node_file):
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--setfile', type=str, help='File containing all gene sets')
+    parser.add_argument('--setfile', type=str, help='File containing all gene sets, or list of file names for gene set profiles')
     parser.add_argument('--outdir', type=str, help='')
     parser.add_argument('--netnodefile', type=str, help='Path to the file containing network nodes')
     parser.add_argument('--overlap', type=int, help='Number of overlapping genes')
@@ -100,31 +132,45 @@ if __name__=='__main__':
     parser.add_argument('--totalgenes', type=int, help='total_genes')
     parser.add_argument('--nrepeats', type=int, help='How many interations to do for each parameter set')
     parser.add_argument('--background', type=str, help='')
+    parser.add_argument('--quant', action='store_true', help='Should quantitative scores also be included? Note: only relevance implemented for quant.')
     args = parser.parse_args()
     
     
     
-    all_genesets = load_node_sets(args.setfile)
-    filtered_genesets = check_genesets_against_network(all_genesets, args.netnodefile)
-    filtered_genesets = {k:v for k,v in filtered_genesets.items() if len(v) >= args.totalgenes}
-    bakground_data = [] # should I make this have some degree of degree matching? Or GO matching? I.e. similar number of annotations. 
+
+    if args.quant:
+        with open(args.setfile, 'r') as f:
+            file_list = [x.strip() for x in f.readlines()]
+        for geneset_file in tqdm(file_list):
+            gene_profile1 = load_full_gene_profile(os.path.join(os.path.dirname(args.setfile), geneset_file+'_CV.txt'), p_th=1e-5, gene_col='Entrez', score_col='P-value', return_dict=True)
+            gene_profile2 = load_full_gene_profile(os.path.join(os.path.dirname(args.setfile), geneset_file+'_RV.txt'), p_th=1e-5, gene_col='Entrez', score_col='P-value', return_dict=True)
+            for i in range(args.nrepeats):
+                noised_set1 = add_noise_to_gene_set_quant(gene_profile1, args.relevance, args.background, list(gene_profile1.keys()), args.netnodefile)
+                noised_set2 = add_noise_to_gene_set_quant(gene_profile2, args.relevance, args.background, list(gene_profile2.keys()), args.netnodefile)
+                write_simulated_geneset_quant(noised_set1, args.outdir, geneset_file, 'CV', args.overlap, args.relevance, args.totalgenes, i+1, args.background)
+                write_simulated_geneset_quant(noised_set2, args.outdir, geneset_file, 'RV', args.overlap, args.relevance, args.totalgenes, i+1, args.background)
+    else:    
+        all_genesets = load_node_sets(args.setfile)
+        filtered_genesets = check_genesets_against_network(all_genesets, args.netnodefile)
+        filtered_genesets = {k:v for k,v in filtered_genesets.items() if len(v) >= args.totalgenes}
+        bakground_data = [] # should I make this have some degree of degree matching? Or GO matching? I.e. similar number of annotations. 
     # Note: genesets should already be prepocessed to those genes that are in the network
-    for geneset in tqdm(filtered_genesets):
-        all_set_genes = list(filtered_genesets[geneset])
-        for i in range(args.nrepeats):
-            # create the overlap partitions
-            overlap_set, set1_unique, set2_unique = partition_gene_set(all_set_genes, args.totalgenes, args.overlap)
-            #print(f'Overlap: {len(overlap_set)}, Set1: {len(set1_unique)}, Set2: {len(set2_unique)}')
-            all_subset_genes = set1_unique + set2_unique + overlap_set
-            if args.relevance < 1:
-            # TODO add noise to the unique sets gene_set, relevance, background, all_subset_genes, netnodefile=None
-                noised_set1_unique, noised_set2_unique = add_noise_to_gene_set(set1_unique, args.relevance, args.background, all_subset_genes, args.netnodefile), add_noise_to_gene_set(set2_unique, args.relevance, args.background, all_subset_genes, args.netnodefile)
-                final_set1 = overlap_set + noised_set1_unique
-                final_set2 = overlap_set + noised_set2_unique
-            else:
-                final_set1 = overlap_set + set1_unique
-                final_set2 = overlap_set + set2_unique
-            write_simulated_geneset(final_set1, args.outdir, geneset, 'CV', args.overlap, args.relevance, args.totalgenes, i+1, args.background)
-            write_simulated_geneset(final_set2, args.outdir, geneset, 'RV', args.overlap, args.relevance, args.totalgenes, i+1, args.background)
-        
-#python create_sim_genesets.py --setfile /cellar/users/snwright/Data/NetColocTest/Reference/go.test --outdir /cellar/users/snwright/Data/NetColocTest/inputs/GO/ --netnodefile /cellar/users/snwright/Data/NetColocTest/Reference/pcnet2_0_nodelist.txt --overlap 0 --relevance 0.5 --totalgenes 100 --nrepeats 2 --background degree
+        for geneset in tqdm(filtered_genesets):
+            all_set_genes = list(filtered_genesets[geneset])
+            for i in range(args.nrepeats):
+                # create the overlap partitions
+                overlap_set, set1_unique, set2_unique = partition_gene_set(all_set_genes, args.totalgenes, args.overlap)
+                #print(f'Overlap: {len(overlap_set)}, Set1: {len(set1_unique)}, Set2: {len(set2_unique)}')
+                all_subset_genes = set1_unique + set2_unique + overlap_set
+                if args.relevance < 1:
+                # TODO add noise to the unique sets gene_set, relevance, background, all_subset_genes, netnodefile=None
+                    noised_set1_unique, noised_set2_unique = add_noise_to_gene_set(set1_unique, args.relevance, args.background, all_subset_genes, args.netnodefile), add_noise_to_gene_set(set2_unique, args.relevance, args.background, all_subset_genes, args.netnodefile)
+                    final_set1 = overlap_set + noised_set1_unique
+                    final_set2 = overlap_set + noised_set2_unique
+                else:
+                    final_set1 = overlap_set + set1_unique
+                    final_set2 = overlap_set + set2_unique
+                write_simulated_geneset(final_set1, args.outdir, geneset, 'CV', args.overlap, args.relevance, args.totalgenes, i+1, args.background)
+                write_simulated_geneset(final_set2, args.outdir, geneset, 'RV', args.overlap, args.relevance, args.totalgenes, i+1, args.background)
+
+    #python create_sim_genesets.py --setfile /cellar/users/snwright/Data/NetColocTest/Reference/go.test --outdir /cellar/users/snwright/Data/NetColocTest/inputs/GO/ --netnodefile /cellar/users/snwright/Data/NetColocTest/Reference/pcnet2_0_nodelist.txt --overlap 0 --relevance 0.5 --totalgenes 100 --nrepeats 2 --background degree

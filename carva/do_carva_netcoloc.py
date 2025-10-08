@@ -6,7 +6,8 @@ from tqdm import tqdm
 import os
 from os.path import exists
 import argparse
-sys.path.append('/cellar/users/snwright/Git/NetColoc/netcoloc/')
+cwd = os.getcwd()
+sys.path.append(os.path.join(cwd, '../../NetColoc/netcoloc/'))
 
 from geneset_utils import *
 from network_utils import *
@@ -14,18 +15,6 @@ from netcoloc_utils import Seeds, get_degree_binning, Timer
 import netprop_zscore as netprop_zscore
 from netprop import *
 from network_colocalization import *
-# test if there are unidentified dependencies on updated coloc functions
-
-#TODO get format of z outputs
-#TODO check loading of seeds and matrices
-#TODO check functions for significance
-#TODO check joining the difference z score results
-#TODO update node names of pcnet?
-
-    #outdir="/cellar/users/snwright/Data/RareCommon"
-    #common_seeds_file=outdir+"/common_seeds_30630.txt"
-    #rare_seeds_file=outdir+"/rare_seeds_30630.txt"
-    #trait="30630"
     
     
 def create_file_suffix(quant, transform, normalization, suff):
@@ -48,7 +37,7 @@ if __name__=='__main__':
     parser.add_argument('--netdir', type=str, help='Directory containing precomputed network matrices', required=False, default=None)
     parser.add_argument('--trait_rare', type=str, help='Trait1 to evaluate')
     parser.add_argument('--trait_common', type=str, help='Trait2 to evaluate')
-    parser.add_argument('--uuid', type=str, help='UUID of network')
+    parser.add_argument('--uuid', type=str, help='UUID of network', required=False)
     parser.add_argument('--net_name', type=str, help='Name of network')
     parser.add_argument('--overlap_control', type=str, choices=['remove', 'bin', 'None'], default='remove')
     parser.add_argument('--min-genes', type=int, default=3)
@@ -70,8 +59,7 @@ if __name__=='__main__':
     common_seeds = Seeds(inputdata = os.path.join(args.indir, args.trait_common+args.commonsuff+'.txt'))
     rare_seeds = Seeds(inputdata = os.path.join(args.indir, args.trait_rare+args.raresuff + '.txt'))
     suffix = create_file_suffix(args.quant, args.transform, args.normalization, args.suffix)
-    #common_seeds = load_seed_genes(args.trait_common, 'common', args.indir)
-    #rare_seeds = load_seed_genes(args.trait_rare, 'rare', args.indir)
+
     t.end('Load seeds')
     # check if there are enough seed to start with, if not exit
     if (len(common_seeds.genes) < args.min_genes) or (len(rare_seeds.genes) < args.min_genes):
@@ -89,7 +77,6 @@ if __name__=='__main__':
         # filter to network:
         # load the presaved node and degree info, or create from the network as needed
         pc_nodes = load_saved_network_nodes(netdir, args.net_name)
-        print('debug PC NODES:', len(pc_nodes))
         pc_degree = load_saved_network_degrees(netdir, args.net_name)
         if (pc_nodes is None) or (pc_degree is None):
             create_saved_nodes_and_degrees(args.uuid, netdir, args.net_name, nodes=pc_nodes is None, degrees=pc_degree is None)
@@ -133,14 +120,8 @@ if __name__=='__main__':
                     t.start('Scored heat zscores')
                     z_common, common_heat, _ = netprop_zscore.calculate_scored_heat_zscores(indiv_heats, pc_nodes, pc_degree, common_seeds.scores, 
                                                         num_reps=1000, minimum_bin_size=args.binsize, verbose=True, normalize_heat=None, random_seed=None, Timer=t)
-                    print('debug Z COMMON', len(z_common))
-                    print('debug COMMON HEAT', len(common_heat))
+
                     t.end('Scored heat zscores')
-                        #calls netprop.scored_network_propagation
-                        #call perform_randomized_scored_propagation
-                            # calls get_random_binned_scores
-                            # calls netproop.scored_network_propagation
-                        # returns series, series, array - I think?
                     z_common.to_csv(os.path.join(args.outdir, args.trait_common + f'_z{args.commonsuff}{suffix}.tsv'), sep="\t", header=False)
                     z_common=pd.read_csv(os.path.join(args.outdir, args.trait_common + f'_z{args.commonsuff}{suffix}.tsv'), sep="\t", index_col=0, header=None).squeeze('columns')
                     z_common.index.name=None
@@ -175,14 +156,7 @@ if __name__=='__main__':
                     t.start('Scored heat zscores')
                     z_rare, rare_heat, _ = netprop_zscore.calculate_scored_heat_zscores(indiv_heats, pc_nodes, pc_degree, rare_seeds.scores, 
                                                     num_reps=1000, minimum_bin_size=args.binsize, verbose=True, normalize_heat=None, random_seed=None, Timer=t)
-                    print('debug Z RARE', len(z_rare))
-                    print('debug RARE HEAT', len(rare_heat))
                     t.end('Scored heat zscores')
-                        #calls netprop.scored_network_propagation
-                        #call perform_randomized_scored_propagation
-                            # calls get_random_binned_scores
-                            # calls netproop.scored_network_propagation
-                        # returns series, series, array - I think?
                     z_rare.to_csv(os.path.join(args.outdir, args.trait_rare + f'_z{args.raresuff}{suffix}.tsv'), sep="\t", header=False)
                     z_rare = pd.read_csv(os.path.join(args.outdir, args.trait_rare + f'_z{args.raresuff}{suffix}.tsv'), sep="\t", index_col=0, header=None).squeeze('columns')
                     z_rare.index.name=None
@@ -206,16 +180,11 @@ if __name__=='__main__':
             
             
             z_scores=pd.DataFrame(z_common, columns=["Common"]).join(pd.DataFrame(z_rare, columns=["Rare"]))
-            print('debug Z SCORES', len(z_scores))
-            print('debug Z SCORES inner', len(pd.DataFrame(z_common, columns=["Common"]).join(pd.DataFrame(z_rare, columns=["Rare"]), how='inner')))
-            # TODO does there actually need to be a difference here?
-                # TODO How should overlap be considered??
             # Calculate statistics
             t.start('Mean Z-score')
             observed, permuted = calculate_mean_z_score_distribution(pd.DataFrame(z_common).rename(columns={1:'z'}), pd.DataFrame(z_rare).rename(columns={1:'z'}), 
                                                                     num_reps=1000, zero_double_negatives=False, overlap_control=args.overlap_control,
                                                                     seed1=common_seeds.genes, seed2=rare_seeds.genes, quant=args.quant)
-            print(observed, permuted)
             stats["mean_nps"] = observed
             stats["null_mean_nps"] = np.mean(permuted)
             stats["p_mean_nps"] = get_p_from_permutation_results(observed, permuted)
