@@ -46,6 +46,7 @@ The following data is included in the `Reference_Data/` directory:
 |gnomad.v4.1.constraint_metrics.tsv.gz  | Gene constraint metrics v4.1, downloaded April 14, 2024 |
 |gtex_median_processed_1.tsv.gz         | Median mRNA Expression data, generated November 25, 2024 |
 |ukb31063_h2_topline.02Oct2019.tsv.gz   | SNP-heritability estimates from the UK Biobank, downlowed April 29, 2024 |
+|s_het_estimates.genebayes.tsv          | Selective constraint estimates from GeneBayes |  
 
 ## NOTEBOOK GUIDE
 
@@ -74,6 +75,8 @@ Regression analysis of gene and trait features for prediction of network colocal
 Identification and analysis of network colocalization for neuropsychiatric traits. Related to Figure 6 & Supplemental Figure 3.
 
 ### Supplemental Notebooks
-**`SX_ColocalizedNetwork_Uploads.ipynb`** - Formation of colocalized trait networks and upload to NDEx.  
-**`SX_HCX_Creation.ipynb`** - Creation of hierarchical systems maps in HCX format.  
-**`SX_NetColocOptimization.ipynb`** - Optimization and benchmarking of NetColoc. Related to Supplemental Figure 4 & Supplemental Table 5. 
+**`S1_NetColocOptimization.ipynb`** - Optimization and benchmarking of NetColoc. Related to Supplemental Figure 4 & Supplemental Table 5. 
+**`S2_DilutionStudies.ipynb`** - Benchmarking of NetColoc in response to randomized inputs.
+**`S3_ColocalizedNetwork_Uploads.ipynb`** - Formation of colocalized trait networks and upload to NDEx.  
+**`S4_HCX_Creation.ipynb`** - Creation of hierarchical systems maps in HCX format.  
+
