@@ -75,8 +75,8 @@ Regression analysis of gene and trait features for prediction of network colocal
 Identification and analysis of network colocalization for neuropsychiatric traits. Related to Figure 6 & Supplemental Figure 3.
 
 ### Supplemental Notebooks
-**`S1_NetColocOptimization.ipynb`** - Optimization and benchmarking of NetColoc. Related to Supplemental Figure 4 & Supplemental Table 5. 
-**`S2_DilutionStudies.ipynb`** - Benchmarking of NetColoc in response to randomized inputs.
-**`S3_ColocalizedNetwork_Uploads.ipynb`** - Formation of colocalized trait networks and upload to NDEx.  
-**`S4_HCX_Creation.ipynb`** - Creation of hierarchical systems maps in HCX format.  
+**`S1_NetColocOptimization.ipynb`** - Optimization and benchmarking of NetColoc. Related to Supplemental Figure 4 & Supplemental Table 5.   
+**`S2_DilutionStudies.ipynb`** - Benchmarking of NetColoc in response to randomized inputs.  
+**`S3_ColocalizedNetwork_Uploads.ipynb`** - Formation of colocalized trait networks and upload to NDEx.    
+**`S4_HCX_Creation.ipynb`** - Creation of hierarchical systems maps in HCX format.    
 
