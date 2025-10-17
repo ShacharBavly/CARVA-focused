@@ -5,12 +5,12 @@
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=1GB
 #SBATCH --time=00:30:00
-#SBATCH --array=0-372%10
+#SBATCH --array=0-1261%30
 
 rare_file=$1
 common_file=$2
 DATADIR=/cellar/users/snwright/Data/RareCommon/inputs/March_2025
-OUTDIR=/cellar/users/snwright/Data/RareCommon/outputs/overlap/March_2025
+OUTDIR=/cellar/users/snwright/Data/RareCommon/outputs/overlap/March_2025/fix
 #DATADIR=/cellar/users/snwright/Data/RareCommon/inputs
 execdir=/cellar/users/snwright/Git/rare_common/carva
 #OUTDIR=/cellar/users/snwright/Data/RareCommon/outputs/netcoloc

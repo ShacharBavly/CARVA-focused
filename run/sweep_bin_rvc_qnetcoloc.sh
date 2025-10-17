@@ -5,7 +5,7 @@
 #SBATCH --cpus-per-task=1
 #SBATCH --time=05:00:00
 #SBATCH --mem-per-cpu=32G
-#SBATCH --array=0-50%5
+#SBATCH --array=0-8,11-43,46-49%1
 
 #DATADIR=/cellar/users/snwright/Data/RareCommon/inputs/testing
 execdir=/cellar/users/snwright/Git/rare_common/carva
@@ -17,8 +17,8 @@ netdir=/cellar/users/snwright/Data/RareCommon/inputs/
 config=$1
 source run_configs/$1
 
-traitsR=($(cat $trait_list1))
-traitsC=($(cat $trait_list2))
+traitsR=($(cat $trait_listR))
+traitsC=($(cat $trait_listC))
 
 tR=${traitsR[$SLURM_ARRAY_TASK_ID]}
 tC=${traitsC[$SLURM_ARRAY_TASK_ID]}
@@ -37,8 +37,8 @@ else
 	overlap_control=remove
 fi
 
-#bin_sizes=(5 20 40 80 160)
-bin_sizes=(10)
+bin_sizes=(5 10 20 40 80 160)
+#bin_sizes=(10)
 for bin in ${bin_sizes[@]}; do
 	test_suff=bin$bin
 
@@ -46,8 +46,9 @@ for bin in ${bin_sizes[@]}; do
 		--indir $datadir --trait_rare $tR --trait_common $tC \
 		--netdir $netdir --suffix $test_suff \
 		--uuid $uuid --net_name $name --transform $transform \
-		--normalization $normalization --quant --min-genes 3 \
+		--normalization $normalization --min-genes 3 \
 		--overlap_control $overlap_control --binsize $bin
+#		--quant
 
 	echo qnetcoloc_${tR}_${tC}__q_${transform}_${normalization}.txt >> $file_list
 

@@ -5,19 +5,12 @@
 #SBATCH --cpus-per-task=1
 #SBATCH --time=01:00:00
 #SBATCH --mem-per-cpu=24G
+#SBATCH --array=0-50%10
 
-#DATADIR=/cellar/users/snwright/Data/RareCommon/inputs/testing
 execdir=/cellar/users/snwright/Git/rare_common/carva
-#OUTDIR=/cellar/users/snwright/Data/RareCommon/outputs/netcoloc/testing
-#uuid='d73d6357-e87b-11ee-9621-005056ae23aa'
-#uuid='8b4b54fa-e87d-11ee-9621-005056ae23aa'
-#uuid='db921c7d-f144-11ee-9621-005056ae23aa'
-#uuid='1ed6be26-6bf3-11f0-a218-005056ae3c32'
-#name=pcnet2_0
-#name=pcnet2_2
-#name=humannet
-#name=omnipath
-netdir=/cellar/users/snwright/Data/RareCommon/inputs/
+outdir=/cellar/users/snwright/Data/RareCommon/outputs/netcoloc/shuffled_nets
+uuid=''
+netdir=/cellar/users/snwright/Data/RareCommon/inputs/shuffled_nets
 
 config=$1
 source run_configs/$1
@@ -48,7 +41,7 @@ fi
 /usr/bin/time -v srun -l python $execdir/do_carva_netcoloc.py --outdir $outdir \
 	--indir $datadir --trait_rare $tR --trait_common $tC \
 	--netdir $netdir --binsize 20 \
-	--uuid $uuid --net_name $name --transform $transform \
+	--net_name $name --transform $transform \
 	--normalization $normalization --quant --min-genes 3 \
 	--overlap_control $overlap_control
 

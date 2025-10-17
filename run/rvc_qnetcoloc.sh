@@ -18,9 +18,9 @@ commonsuff='_CV'
 
 config=$1
 source run_configs/$1
-
 traitsR=($(cat $trait_listR))
 traitsC=($(cat $trait_listC))
+
 
 tR=${traitsR[$SLURM_ARRAY_TASK_ID]}
 tC=${traitsC[$SLURM_ARRAY_TASK_ID]}
@@ -44,7 +44,9 @@ fi
 	--indir $datadir --trait_rare $tR --trait_common $tC \
 	--netdir $netdir --binsize 20 \
 	--uuid $uuid --net_name $name --transform $transform \
-	--normalization $normalization --quant --min-genes 3 \
-	--overlap_control $overlap_control --raresuff $raresuff --commonsuff $commonsuff
+	--normalization $normalization \
+	--min-genes 3 \
+	--overlap_control $overlap_control --raresuff $raresuff --commonsuff $commonsuff #\
+	#--quant
 
 echo qnetcoloc_${tR}_${tC}__q_${transform}_${normalization}.txt >> $file_list

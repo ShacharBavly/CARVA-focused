@@ -7,7 +7,7 @@
 #SBATCH --time=01:00:00
 #SBATCH --array=0
 
-OUTDIR=/cellar/users/snwright/Data/RareCommon/inputs/
+OUTDIR=/cellar/users/snwright/Data/RareCommon/inputs
 execdir=/cellar/users/snwright/Git/rare_common/carva
 #uuid='d73d6357-e87b-11ee-9621-005056ae23aa'
 #name=pcnet2_0
@@ -15,9 +15,11 @@ execdir=/cellar/users/snwright/Git/rare_common/carva
 #name=pcnet2_2
 #uuid='db921c7d-f144-11ee-9621-005056ae23aa'
 #name=humannet
-uuid='5f5da339-f14a-11ee-9621-005056ae23aa'
-name=stringHC
-filter=Score_700
+#uuid='5f5da339-f14a-11ee-9621-005056ae23aa'
+#name=stringHC
+#filter=Score_700
+uuid='1ed6be26-6bf3-11f0-a218-005056ae3c32'
+name='omnipath'
 
 #uuid_list=$1
 #net_names=$2
@@ -27,7 +29,8 @@ filter=Score_700
 #uuid=${uuids[$SLURM_ARRAY_TASK_ID]}
 #name=${names[$SLURM_ARRAY_TASK_ID]}
 
-srun -l python $execdir/get_heat_matrix.py $OUTDIR $uuid $name $filter
+srun -l python $execdir/get_heat_matrix.py --outdir $OUTDIR \
+	--uuid $uuid --name $name #--filter $filter
 
 
 
