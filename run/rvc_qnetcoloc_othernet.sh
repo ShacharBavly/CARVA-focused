@@ -1,14 +1,17 @@
 #!/bin/bash -l
 #SBATCH --job-name=qnetcoloc
-#SBATCH --output /cellar/users/snwright/Data/RareCommon/slurm/qnetcoloc_%A_%a.out
-#SBATCH --error /cellar/users/snwright/Data/RareCommon/slurm/qnetcoloc_%A_%a.err
+#SBATCH --output qnetcoloc_%A_%a.out
+#SBATCH --error qnetcoloc_%A_%a.err
 #SBATCH --cpus-per-task=1
 #SBATCH --time=01:00:00
 #SBATCH --mem-per-cpu=24G
 
-#DATADIR=/cellar/users/snwright/Data/RareCommon/inputs/testing
+
+PWD=$(pwd)
+netdir=$PWD/../outputs
+execdir=$PWD/../carva
 execdir=/cellar/users/snwright/Git/rare_common/carva
-#OUTDIR=/cellar/users/snwright/Data/RareCommon/outputs/netcoloc/testing
+
 #uuid='d73d6357-e87b-11ee-9621-005056ae23aa'
 #uuid='8b4b54fa-e87d-11ee-9621-005056ae23aa'
 #uuid='db921c7d-f144-11ee-9621-005056ae23aa'
@@ -17,7 +20,7 @@ execdir=/cellar/users/snwright/Git/rare_common/carva
 #name=pcnet2_2
 #name=humannet
 #name=omnipath
-netdir=/cellar/users/snwright/Data/RareCommon/inputs/
+
 
 config=$1
 source run_configs/$1

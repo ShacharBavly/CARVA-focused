@@ -1,16 +1,17 @@
 #!/bin/bash -l
 #SBATCH --job-name=qnetcoloc
-#SBATCH --output /cellar/users/snwright/Data/RareCommon/slurm/qnetcoloc_%A_%a.out
-#SBATCH --error /cellar/users/snwright/Data/RareCommon/slurm/qnetcoloc_%A_%a.err
+#SBATCH --output qnetcoloc_%A_%a.out
+#SBATCH --error qnetcoloc_%A_%a.err
 #SBATCH --cpus-per-task=1
 #SBATCH --time=01:00:00
 #SBATCH --mem-per-cpu=24G
 #SBATCH --array=0-50%10
 
-execdir=/cellar/users/snwright/Git/rare_common/carva
-outdir=/cellar/users/snwright/Data/RareCommon/outputs/netcoloc/shuffled_nets
 uuid=''
-netdir=/cellar/users/snwright/Data/RareCommon/inputs/shuffled_nets
+PWD=$(pwd)
+outdir=$PWD/../outputs
+netdir=$PWD/../outputs
+execdir=$PWD/../carva
 
 config=$1
 source run_configs/$1

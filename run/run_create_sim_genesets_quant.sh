@@ -1,17 +1,19 @@
 #!/bin/bash -l
 #SBATCH --job-name=genesets
-#SBATCH --output /cellar/users/snwright/Data/RareCommon/slurm/genesets_%A.out
-#SBATCH --error /cellar/users/snwright/Data/RareCommon/slurm/genesets_%A.err
+#SBATCH --output genesets_%A.out
+#SBATCH --error genesets_%A.err
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=500MB
 #SBATCH --time=01:00:00
 
-setfile=/cellar/users/snwright/Data/RareCommon/inputs/testing/nearestGene.traitlist
+setfile=$1
+nodefile=$2
 total_genes=150
 repeats=5
-outdir=/cellar/users/snwright/Data/RareCommon/inputs/quant_testing
-nodefile=/cellar/users/snwright/Data/RareCommon/inputs/pcnet2_0_nodelist.txt
-execdir=/cellar/users/snwright/Git/rare_common/carva
+
+PWD=$(pwd)
+outdir=$PWD/../outputs
+execdir=$PWD/../carva
 # with an overlap of 50 there will be each gene set will have 100 genes, with 50 of them being mat
 overlaps=( 0 ) # number of matching genes
 relevance=( 1.0 0.75 0.5 0.25 0.1 0)
