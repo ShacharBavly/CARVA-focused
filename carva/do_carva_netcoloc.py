@@ -11,7 +11,6 @@ from netcoloc.netcoloc_utils import Seeds, get_degree_binning, Timer
 import netcoloc.netprop_zscore as netprop_zscore
 from netcoloc.netprop import *
 from netcoloc.network_colocalization import *
-
     
 def create_file_suffix(quant, transform, normalization, suff):
     """ Create a suffix for output files based on the parameters.
@@ -42,7 +41,7 @@ if __name__=='__main__':
     parser.add_argument('--netdir', type=str, help='Directory containing precomputed network matrices', required=False, default=None)
     parser.add_argument('--trait_rare', type=str, help='Trait1 to evaluate')
     parser.add_argument('--trait_common', type=str, help='Trait2 to evaluate')
-    parser.add_argument('--uuid', type=str, help='UUID of network')
+    parser.add_argument('--uuid', type=str, help='UUID of network', required=False)
     parser.add_argument('--net_name', type=str, help='Name of network')
     parser.add_argument('--overlap_control', type=str, choices=['remove', 'bin', 'None'], default='remove', help='Method to control for overlap between seed genes')
     parser.add_argument('--min-genes', type=int, default=3, help='Minimum number of seed genes required to run analysis')
@@ -127,6 +126,7 @@ if __name__=='__main__':
                     t.start('Scored heat zscores')
                     z_common, common_heat, _ = netprop_zscore.calculate_scored_heat_zscores(indiv_heats, pc_nodes, pc_degree, common_seeds.scores, 
                                                         num_reps=1000, minimum_bin_size=args.binsize, verbose=True, normalize_heat=None, random_seed=None, Timer=t)
+
                     t.end('Scored heat zscores')
                     z_common.to_csv(os.path.join(args.outdir, args.trait_common + f'_z{args.commonsuff}{suffix}.tsv'), sep="\t", header=False)
                     z_common=pd.read_csv(os.path.join(args.outdir, args.trait_common + f'_z{args.commonsuff}{suffix}.tsv'), sep="\t", index_col=0, header=None).squeeze('columns')
@@ -194,7 +194,6 @@ if __name__=='__main__':
             observed, permuted = calculate_mean_z_score_distribution(pd.DataFrame(z_common).rename(columns={1:'z'}), pd.DataFrame(z_rare).rename(columns={1:'z'}), 
                                                                     num_reps=1000, zero_double_negatives=False, overlap_control=args.overlap_control,
                                                                     seed1=common_seeds.genes, seed2=rare_seeds.genes, quant=args.quant)
-            print(observed, permuted)
             stats["mean_nps"] = observed
             stats["null_mean_nps"] = np.mean(permuted)
             stats["p_mean_nps"] = get_p_from_permutation_results(observed, permuted)

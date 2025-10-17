@@ -25,7 +25,8 @@ if __name__ == '__main__':
         n_common = len(common_genes)
         intersect = set(rare_genes).intersection(common_genes)
         n_intersect = len(intersect)
-        p = hypergeom.sf(k=n_intersect, N=n_rare, n=n_common, M=args.background_N)
+        p = hypergeom.sf(k=n_intersect-1, N=n_rare, n=n_common, M=args.background_N)
+            
         with open(outfile, 'w') as f:
             f.write('\t'.join([f'{args.raretrait}_{args.commontrait}', args.test_name, str(n_common), str(n_rare), str(n_intersect), str(args.background_N), str(p)])+'\n')
         

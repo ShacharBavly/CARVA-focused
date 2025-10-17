@@ -5,7 +5,7 @@
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=1GB
 #SBATCH --time=00:30:00
-#SBATCH --array=0-372%10
+#SBATCH --array=0-1261%30
 
 rare_file=$1
 common_file=$2
@@ -13,6 +13,7 @@ PWD=$(pwd)
 DATADIR=$PWD/../outputs
 OUTDIR=$PWD/../outputs
 execdir=$PWD/../carva
+
 test_name=defaults
 background=19000
 
