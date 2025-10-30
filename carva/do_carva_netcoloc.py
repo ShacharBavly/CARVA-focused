@@ -40,8 +40,8 @@ if __name__=='__main__':
     parser.add_argument('--outdir', type=str, help='Path to outputs')
     parser.add_argument('--indir', type=str, help='Path to inputs')
     parser.add_argument('--netdir', type=str, help='Directory containing precomputed network matrices', required=False, default=None)
-    parser.add_argument('--trait_rare', type=str, help='Trait1 to evaluate')
-    parser.add_argument('--trait_common', type=str, help='Trait2 to evaluate')
+    parser.add_argument("-tr", '--trait_rare', type=str, help='Trait1 to evaluate')
+    parser.add_argument("-tc", '--trait_common', type=str, help='Trait2 to evaluate')
     parser.add_argument('--uuid', type=str, help='UUID of network')
     parser.add_argument('--net_name', type=str, help='Name of network')
     parser.add_argument('--overlap_control', type=str, choices=['remove', 'bin', 'None'], default='remove', help='Method to control for overlap between seed genes')
@@ -54,8 +54,8 @@ if __name__=='__main__':
     parser.add_argument('--zcoloc', type=float, default=3, help='Z-score threshold for colocalization')
     parser.add_argument('--z1z2', type=float, default=1, help='Z-score threshold for trait 1 and 2')
     parser.add_argument('--stat_suffix', type=str, default=None, help='Additional suffix for statistics')
-    parser.add_argument('--raresuff', type=str, default='_RV', help='Suffix for the file containing rare trait genes')
-    parser.add_argument('--commonsuff', type=str, default='_CV', help='Suffix for the file containing common trait genes')
+    parser.add_argument('--raresuff', type=str, default='_rv', help='Suffix for the file containing rare trait genes')
+    parser.add_argument('--commonsuff', type=str, default='_cv', help='Suffix for the file containing common trait genes')
     args = parser.parse_args()
 
     t = Timer()
@@ -66,6 +66,9 @@ if __name__=='__main__':
     suffix = create_file_suffix(args.quant, args.transform, args.normalization, args.suffix)
 
     t.end('Load seeds')
+    # if outdir doesnt exist, create it
+    os.makedirs(args.outdir, exist_ok=True)
+
     # check if there are enough seed to start with, if not exit
     if (len(common_seeds.genes) < args.min_genes) or (len(rare_seeds.genes) < args.min_genes):
         print("Not enough common/rare seeds")
@@ -126,7 +129,7 @@ if __name__=='__main__':
                         common_seeds.normalize_scores(method=args.normalization)
                     t.start('Scored heat zscores')
                     z_common, common_heat, _ = netprop_zscore.calculate_scored_heat_zscores(indiv_heats, pc_nodes, pc_degree, common_seeds.scores, 
-                                                        num_reps=1000, minimum_bin_size=args.binsize, verbose=True, normalize_heat=None, random_seed=None, Timer=t)
+                                                        num_reps=3000, minimum_bin_size=args.binsize, verbose=True, normalize_heat=None, random_seed=None, Timer=t)
                     t.end('Scored heat zscores')
                     z_common.to_csv(os.path.join(args.outdir, args.trait_common + f'_z{args.commonsuff}{suffix}.tsv'), sep="\t", header=False)
                     z_common=pd.read_csv(os.path.join(args.outdir, args.trait_common + f'_z{args.commonsuff}{suffix}.tsv'), sep="\t", index_col=0, header=None).squeeze('columns')
@@ -144,7 +147,7 @@ if __name__=='__main__':
                         common_genes = common_seeds.genes
                     
                     z_common, common_heat, _ = netprop_zscore.calculate_heat_zscores(indiv_heats, pc_nodes,pc_degree, 
-                                                common_genes,num_reps=1000, minimum_bin_size=args.binsize, alpha=0.5 )
+                                                common_genes,num_reps=3000, minimum_bin_size=args.binsize, alpha=0.5 )
 
                     z_common.to_csv(os.path.join(args.outdir, args.trait_common +f'_z{args.commonsuff}{suffix}.tsv'), sep="\t", header=False)
                     z_common=pd.read_csv(os.path.join(args.outdir, args.trait_common + f'_z{args.commonsuff}{suffix}.tsv'), sep="\t", index_col=0, header=None).squeeze('columns')
@@ -162,7 +165,7 @@ if __name__=='__main__':
                         rare_seeds.normalize_scores(method=args.normalization)
                     t.start('Scored heat zscores')
                     z_rare, rare_heat, _ = netprop_zscore.calculate_scored_heat_zscores(indiv_heats, pc_nodes, pc_degree, rare_seeds.scores, 
-                                                    num_reps=1000, minimum_bin_size=args.binsize, verbose=True, normalize_heat=None, random_seed=None, Timer=t)
+                                                    num_reps=3000, minimum_bin_size=args.binsize, verbose=True, normalize_heat=None, random_seed=None, Timer=t)
                     t.end('Scored heat zscores')
 
                     z_rare.to_csv(os.path.join(args.outdir, args.trait_rare + f'_z{args.raresuff}{suffix}.tsv'), sep="\t", header=False)
@@ -179,7 +182,7 @@ if __name__=='__main__':
                     else:
                         rare_genes = rare_seeds.genes
                     z_rare, rare_heat, _ = netprop_zscore.calculate_heat_zscores(indiv_heats, pc_nodes,pc_degree, rare_genes,
-                                                                num_reps=1000, alpha=0.5,minimum_bin_size=args.binsize)                                    
+                                                                num_reps=3000, alpha=0.5,minimum_bin_size=args.binsize)                                    
 
                     z_rare.to_csv(os.path.join(args.outdir, args.trait_rare + f'_z{args.raresuff}{suffix}.tsv'), sep="\t", header=False)
                     z_rare = pd.read_csv(os.path.join(args.outdir, args.trait_rare + f'_z{args.raresuff}{suffix}.tsv'), sep="\t", index_col=0, header=None).squeeze('columns')
@@ -190,9 +193,10 @@ if __name__=='__main__':
             z_scores=pd.DataFrame(z_common, columns=["Common"]).join(pd.DataFrame(z_rare, columns=["Rare"]))
 
             # Calculate statistics
+            # shachar note - changed the num_reps from 1000 to 3000
             t.start('Mean Z-score')
             observed, permuted = calculate_mean_z_score_distribution(pd.DataFrame(z_common).rename(columns={1:'z'}), pd.DataFrame(z_rare).rename(columns={1:'z'}), 
-                                                                    num_reps=1000, zero_double_negatives=False, overlap_control=args.overlap_control,
+                                                                    num_reps=3000, zero_double_negatives=False, overlap_control=args.overlap_control,
                                                                     seed1=common_seeds.genes, seed2=rare_seeds.genes, quant=args.quant)
             print(observed, permuted)
             stats["mean_nps"] = observed
@@ -201,7 +205,7 @@ if __name__=='__main__':
             t.end('Mean Z-score')
             observed_sz, permuted_sz = calculate_expected_overlap(pd.DataFrame(z_common).rename(columns={1:'z'}), pd.DataFrame(z_rare).rename(columns={1:'z'}), 
                                                                 z_score_threshold=args.zcoloc, z1_threshold=args.z1z2,
-                                                                z2_threshold=args.z1z2, num_reps=1000, plot=False, 
+                                                                z2_threshold=args.z1z2, num_reps=3000, plot=False, 
                                                                 overlap_control=args.overlap_control,
                                                                 seed1=common_seeds.genes, seed2=rare_seeds.genes)
             t.start('Size')
