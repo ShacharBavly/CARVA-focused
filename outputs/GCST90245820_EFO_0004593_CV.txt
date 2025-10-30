@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+4544	MTNR1B	5e-41	
+6934	TCF7L2	4e-15	
+2646	GCKR	4e-06	

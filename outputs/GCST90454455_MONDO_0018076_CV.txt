@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+158399	ZNF483	3e-07	
+8495	PPFIBP2	1e-06	
+10428	CFDP1	5e-06	

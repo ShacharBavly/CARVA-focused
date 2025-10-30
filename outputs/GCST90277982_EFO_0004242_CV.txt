@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+1353	COX11	4e-06	0.6
+29841	GRHL1	5e-06	0.68
+340895	MALRD1	1e-05	0.61

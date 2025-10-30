@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+80736	SLC44A4	1e-48	1.9
+8635	RNASET2	1e-16	1.2
+57178	ZMIZ1	8e-07	1.14

@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+26354	GNL3	5e-09	1.09
+8464	SUPT3H	6e-07	1.08
+79068	FTO	4e-06	1.07

@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+8778	SIGLEC5	5e-08	1.17
+30811	HUNK	3e-06	1.15
+11164	NUDT5	8e-06	1.17

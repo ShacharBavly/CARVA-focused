@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+4978	OPCML	3e-07	0.151
+84131	CEP78	6e-06	0.457
+56916	SMARCAD1	8e-06	0.452

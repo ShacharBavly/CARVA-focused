@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+177	AGER	2e-22	0.053
+10144	FAM13A	5e-21	0.043
+29992	PILRA	2e-10	0.029

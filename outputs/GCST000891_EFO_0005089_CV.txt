@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+8029	CUBN	3e-06	0.007
+8701	DNAH11	4e-06	0.021
+157807	CLVS1	6e-06	0.009

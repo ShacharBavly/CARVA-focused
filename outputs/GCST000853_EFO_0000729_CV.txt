@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+7148	TNXB	1e-16	3.95
+9734	HDAC9	2e-06	
+781	CACNA2D1	8e-06	

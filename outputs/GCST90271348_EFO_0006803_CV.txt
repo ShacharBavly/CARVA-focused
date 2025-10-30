@@ -1,0 +1,5 @@
+Entrez	Gene Symbol	P-value	Beta
+8974	P4HA2	3e-09	1.32
+1232	CCR3	1e-08	0.81
+2185	PTK2B	2e-08	0.73
+5340	PLG	3e-08	1.28

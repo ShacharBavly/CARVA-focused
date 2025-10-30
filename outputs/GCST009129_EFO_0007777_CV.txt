@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+79068	FTO	9e-154	
+627	BDNF	2e-22	
+2802	GOLGA3	2e-12	

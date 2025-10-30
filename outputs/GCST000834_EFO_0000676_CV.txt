@@ -1,0 +1,5 @@
+Entrez	Gene Symbol	P-value	Beta
+4843	NOS2	4e-11	1.19
+54620	FBXL19	9e-10	1.16
+9692	PRORP	2e-08	1.15
+9825	SPATA2	2e-07	1.21

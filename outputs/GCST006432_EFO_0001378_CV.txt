@@ -1,0 +1,5 @@
+Entrez	Gene Symbol	P-value	Beta
+10365	KLF2	7e-11	1.14
+6670	SP3	7e-09	1.12
+153241	CEP120	1e-08	1.11
+3662	IRF4	6e-08	1.1

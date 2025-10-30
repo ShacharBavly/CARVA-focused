@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+8701	DNAH11	3e-14	1.38
+54986	ULK4	2e-08	1.32
+1838	DTNB	4e-07	1.29

@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+57118	CAMK1D	3e-08	1.11
+51347	TAOK3	3e-08	1.12
+80205	CHD9	5e-08	1.15

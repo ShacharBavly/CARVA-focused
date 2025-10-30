@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+3106	HLA-B	2e-10	1.32
+64411	ARAP3	6e-08	1.34
+942	CD86	8e-08	1.16

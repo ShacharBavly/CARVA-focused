@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+200407	CREG2	3e-06	
+10301	DLEU1	5e-06	
+55691	FRMD4A	6e-06	

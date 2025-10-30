@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+4482	MSRA	1e-06	3.332
+9781	RNF144A	3e-06	2.89
+6875	TAF4B	8e-06	2.996

@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+29956	CERS2	1e-07	1.23
+6760	SS18	2e-06	1.26
+9079	LDB2	5e-06	1.41

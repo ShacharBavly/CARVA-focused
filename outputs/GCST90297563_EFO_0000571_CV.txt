@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+92345	NAF1	7e-09	1.08
+6439	SFTPB	2e-08	1.08
+64762	GAREM1	4e-08	1.08

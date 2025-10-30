@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+2202	EFEMP1	7e-14	0.84
+7490	WT1	5e-10	0.88
+57620	STIM2	2e-08	2.17

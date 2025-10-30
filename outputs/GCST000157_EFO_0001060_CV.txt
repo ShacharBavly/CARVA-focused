@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+8809	IL18R1	4e-09	1.28
+4026	LPP	5e-09	1.23
+6311	ATXN2	8e-08	1.21

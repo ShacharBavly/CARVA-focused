@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+1136	CHRNA3	3e-16	1.36
+10144	FAM13A	3e-10	1.36
+7042	TGFB2	9e-08	1.26

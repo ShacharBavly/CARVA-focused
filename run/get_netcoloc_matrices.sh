@@ -7,6 +7,7 @@
 #SBATCH --time=01:00:00
 #SBATCH --array=0
 
+
 PWD=$(pwd)
 OUTDIR=$PWD/../outputs
 execdir=$PWD/../carva
@@ -15,26 +16,32 @@ execdir=$PWD/../carva
 uuid='d73d6357-e87b-11ee-9621-005056ae23aa'
 name=pcnet2_0
 
-srun -l python $execdir/get_heat_matrix.py $OUTDIR $uuid $name
+srun -l python $execdir/get_heat_matrix.py --outdir $OUTDIR --uuid $uuid --name $name 
 
 ## PCNET 2.1
 uuid='8b4b54fa-e87d-11ee-9621-005056ae23aa'
 name=pcnet2_2
 
-srun -l python $execdir/get_heat_matrix.py $OUTDIR $uuid $name
+srun -l python $execdir/get_heat_matrix.py --outdir $OUTDIR --uuid $uuid --name $name 
 
 ## HumanNet
 uuid='db921c7d-f144-11ee-9621-005056ae23aa'
 name=humannet
 
-srun -l python $execdir/get_heat_matrix.py $OUTDIR $uuid $name
+srun -l python $execdir/get_heat_matrix.py --outdir $OUTDIR --uuid $uuid --name $name 
 
 ## STRING High Confidence
 uuid='5f5da339-f14a-11ee-9621-005056ae23aa'
 name=stringHC
 filter=Score_700
 
-srun -l python $execdir/get_heat_matrix.py $OUTDIR $uuid $name $filter
+srun -l python $execdir/get_heat_matrix.py --outdir $OUTDIR --uuid $uuid --name $name --filter $filter
+
+uuid='1ed6be26-6bf3-11f0-a218-005056ae3c32'
+name='omnipath'
+
+srun -l python $execdir/get_heat_matrix.py --outdir $OUTDIR --uuid $uuid --name $name 
+
 
 
 

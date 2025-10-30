@@ -1,0 +1,5 @@
+Entrez	Gene Symbol	P-value	Beta
+79068	FTO	5e-36	7.05
+25970	SH2B1	1e-09	3.69
+1608	DGKG	4e-09	4.0
+153241	CEP120	2e-06	2.71

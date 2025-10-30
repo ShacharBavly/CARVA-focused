@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+121512	FGD4	5e-06	1.36
+7638	ZNF221	9e-06	1.22
+54453	RIN2	9e-06	1.22

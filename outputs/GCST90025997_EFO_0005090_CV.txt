@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+8288	EPX	2e-19	0.15476
+51411	BIN2	4e-09	0.749648
+9368	NHERF1	2e-08	0.152323

@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+3106	HLA-B	5e-13	0.95
+89795	NAV3	3e-08	0.95
+4684	NCAM1	4e-08	0.95

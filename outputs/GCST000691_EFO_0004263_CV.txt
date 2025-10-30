@@ -1,0 +1,5 @@
+Entrez	Gene Symbol	P-value	Beta
+115	ADCY9	1e-06	1.12
+23284	ADGRL3	3e-06	
+79750	ZNF385D	5e-06	1.2
+5789	PTPRD	9e-06	

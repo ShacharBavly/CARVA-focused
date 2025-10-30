@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+463	ZFHX3	3e-09	0.0668
+84909	AOPEP	6e-09	0.46
+57099	AVEN	4e-08	0.3391

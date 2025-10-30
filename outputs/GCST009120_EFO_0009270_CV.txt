@@ -1,0 +1,5 @@
+Entrez	Gene Symbol	P-value	Beta
+2099	ESR1	9e-130	
+65084	TMEM135	4e-98	
+56776	FMN2	1e-94	
+80129	CCDC170	1e-76	

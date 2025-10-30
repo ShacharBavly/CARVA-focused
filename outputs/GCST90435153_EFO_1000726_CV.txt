@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+6188	RPS3	1e-06	1.48898
+4026	LPP	6e-06	0.101133
+8826	IQGAP1	8e-06	0.0986448

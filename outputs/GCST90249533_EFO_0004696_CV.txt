@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+6462	SHBG	4e-48	0.197
+482	ATP1B2	2e-38	0.192
+91851	CHRDL1	2e-13	0.076

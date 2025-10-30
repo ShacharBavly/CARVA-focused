@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+11138	TBC1D8	1e-07	0.19
+114876	OSBPL1A	4e-07	0.17
+220164	DOK6	9e-07	0.13

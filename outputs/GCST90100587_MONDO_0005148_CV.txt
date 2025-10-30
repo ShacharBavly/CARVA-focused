@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+6239	RREB1	7e-14	1.11
+11174	ADAMTS6	3e-08	5.46
+9172	MYOM2	2e-06	1.08

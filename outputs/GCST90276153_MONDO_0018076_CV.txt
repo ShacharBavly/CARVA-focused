@@ -1,0 +1,5 @@
+Entrez	Gene Symbol	P-value	Beta
+23081	KDM4C	2e-11	1.09
+1158	CKM	1e-09	1.08
+79977	GRHL2	2e-09	1.07
+157680	VPS13B	3e-09	1.1

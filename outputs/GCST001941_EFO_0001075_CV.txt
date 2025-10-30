@@ -1,0 +1,5 @@
+Entrez	Gene Symbol	P-value	Beta
+8631	SKAP1	3e-10	1.14
+92421	CHMP4C	7e-10	1.24
+6928	HNF1B	8e-10	1.12
+8028	MLLT10	2e-08	1.1

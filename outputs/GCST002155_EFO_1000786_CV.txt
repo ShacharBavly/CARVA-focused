@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+816	CAMK2B	8e-10	1.27
+196385	DNAH10	2e-06	1.07
+342538	NACA2	8e-06	1.12

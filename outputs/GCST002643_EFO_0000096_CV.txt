@@ -1,0 +1,5 @@
+Entrez	Gene Symbol	P-value	Beta
+4026	LPP	1e-10	1.21
+79415	CYBC1	2e-07	1.23
+942	CD86	2e-07	1.16
+8170	SLC14A2	4e-07	1.33

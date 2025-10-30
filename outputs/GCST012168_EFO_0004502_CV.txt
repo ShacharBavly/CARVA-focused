@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+57687	VAT1L	2e-06	
+57799	RAB40C	4e-06	0.184
+11234	HPS5	9e-06	0.129

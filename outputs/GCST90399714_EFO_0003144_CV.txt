@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+79068	FTO	2e-14	0.050284
+4018	LPA	3e-14	0.11551
+463	ZFHX3	6e-10	0.045775

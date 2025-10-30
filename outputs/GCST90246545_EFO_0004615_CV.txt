@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+348	APOE	2e-78	0.351
+1952	CELSR2	5e-30	0.181
+3818	KLKB1	3e-20	0.123

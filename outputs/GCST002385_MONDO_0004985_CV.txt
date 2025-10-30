@@ -1,0 +1,5 @@
+Entrez	Gene Symbol	P-value	Beta
+288	ANK3	7e-11	1.27
+26011	TENM4	1e-09	1.19
+108	ADCY2	1e-08	1.14
+23383	MAU2	9e-08	1.15

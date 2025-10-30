@@ -1,0 +1,5 @@
+Entrez	Gene Symbol	P-value	Beta
+28969	BZW2	3e-07	3.2
+22796	COG2	2e-06	2.0
+23604	DAPK2	3e-06	2.8
+63976	PRDM16	4e-06	0.5

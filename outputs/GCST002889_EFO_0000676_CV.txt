@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+818	CAMK2G	2e-14	1.12
+23228	PLCL2	7e-14	1.12
+11214	AKAP13	2e-06	1.1

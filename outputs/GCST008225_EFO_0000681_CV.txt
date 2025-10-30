@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+8110	DPF3	2e-14	1.38
+54715	RBFOX1	5e-06	1.18
+348932	SLC6A18	6e-06	1.4705882

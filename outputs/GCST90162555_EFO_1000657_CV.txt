@@ -1,0 +1,5 @@
+Entrez	Gene Symbol	P-value	Beta
+29117	BRD7	5e-07	45.8
+53353	LRP1B	1e-06	17.4
+9228	DLGAP2	3e-06	5.2
+80017	DGLUCY	4e-06	18.9

@@ -1,0 +1,5 @@
+Entrez	Gene Symbol	P-value	Beta
+51752	ERAP1	2e-27	
+149233	IL23R	2e-17	
+23046	KIF21B	5e-12	
+118429	ANTXR2	9e-08	

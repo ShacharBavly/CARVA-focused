@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+2309	FOXO3	5e-09	
+2693	GHSR	2e-08	
+57537	SORCS2	2e-07	

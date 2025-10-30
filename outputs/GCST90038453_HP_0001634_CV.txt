@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+4482	MSRA	1e-07	1.29
+4660	PPP1R12B	4e-07	
+127833	SYT2	7e-07	

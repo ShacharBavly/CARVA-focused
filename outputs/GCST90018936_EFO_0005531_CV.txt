@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+148823	GCSAML	3e-15	0.2385
+6786	STIM1	9e-09	0.12
+64499	TPSB2	1e-08	0.1373

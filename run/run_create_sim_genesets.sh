@@ -1,0 +1,38 @@
+#!/bin/bash -l
+#SBATCH --job-name=genesets
+#SBATCH --output genesets_%A.out
+#SBATCH --error genesets_%A.err
+#SBATCH --cpus-per-task=1
+#SBATCH --mem-per-cpu=500MB
+#SBATCH --time=01:00:00
+
+setfile=$1
+total_genes=150
+repeats=3
+nodefile=$2
+
+PWD=$(pwd)
+outdir=$PWD/../outputs
+execdir=$PWD/../carva
+
+# with an overlap of 50 there will be each gene set will have 100 genes, with 50 of them being mat
+overlaps=( 0 ) # number of matching genes
+relevance=( 1.0 0.75 0.5 0.25 0 )
+#relevance=( 0 0.1 0.25 0.5 0.75 )
+#relevance=( 1.0 0.9 0.8 0.7 0.6 0.5 0.4 0.3 0.2 0.1 0 ) # persent of remaining genes to be from same gene set
+
+
+for o in "${overlaps[@]}"
+do
+	for r in "${relevance[@]}"
+	do
+		# create the input files
+		srun -l python $execdir/create_sim_genesets.py --setfile $setfile \
+			--outdir $outdir --netnodefile $nodefile \
+			--overlap $o --relevance $r \
+			--totalgenes $total_genes --nrepeats $repeats --background degree
+		## TODO
+		#srun -l python do_netcoloc.py --outdir $outdir --indir $indir --trait_rare $suffix.1 \
+		#	--trait_common $suffix.2 --uuid $uuid --net_name $net_name
+	done
+done

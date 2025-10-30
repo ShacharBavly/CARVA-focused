@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+7402	UTRN	5e-08	0.92
+5789	PTPRD	2e-07	0.92
+116987	AGAP1	3e-06	0.94

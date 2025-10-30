@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+846	CASR	1e-103	0.235
+26355	FAM162A	1e-47	0.159
+3836	KPNA1	4e-16	0.227

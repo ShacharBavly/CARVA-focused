@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+2720	GLB1	6e-21	1.29
+8809	IL18R1	8e-18	1.27
+23274	CLEC16A	6e-06	1.17

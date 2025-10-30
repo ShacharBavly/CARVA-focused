@@ -1,0 +1,5 @@
+Entrez	Gene Symbol	P-value	Beta
+79695	GALNT12	3e-06	0.9
+9874	TLK1	4e-06	1.22
+4435	CITED1	6e-06	1.15
+79875	THSD4	7e-06	0.89

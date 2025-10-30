@@ -1,0 +1,5 @@
+Entrez	Gene Symbol	P-value	Beta
+221895	JAZF1	1e-08	0.78
+3817	KLK2	2e-08	0.79
+354	KLK3	3e-08	0.76
+80320	SP6	4e-08	1.66

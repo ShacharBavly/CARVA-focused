@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+2153	F5	4e-12	0.64
+28	ABO	5e-10	1.2
+79096	CSTPP1	4e-08	1.67

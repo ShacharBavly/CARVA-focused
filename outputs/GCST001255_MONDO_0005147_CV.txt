@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+4008	LMO7	6e-11	1.43
+22979	EFR3B	4e-09	1.22
+60495	HPSE2	8e-07	1.1

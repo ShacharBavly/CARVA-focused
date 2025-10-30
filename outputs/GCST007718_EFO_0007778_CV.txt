@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+8029	CUBN	4e-62	0.198
+196	AHR	2e-14	0.023
+9784	SNX17	4e-08	0.016

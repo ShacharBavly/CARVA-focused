@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+5579	PRKCB	7e-07	1.52
+4345	CD200	6e-06	1.42
+7453	WARS1	6e-06	1.61

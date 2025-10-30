@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+152926	PPM1K	8e-07	2.86
+3601	IL15RA	3e-06	0.72
+4659	PPP1R12A	4e-06	2.48

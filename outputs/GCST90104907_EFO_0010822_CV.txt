@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+79068	FTO	4e-14	7.57
+11060	WWP2	1e-10	6.43
+4054	LTBP3	3e-10	6.29

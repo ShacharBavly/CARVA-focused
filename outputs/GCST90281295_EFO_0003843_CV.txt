@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+51575	ESF1	5e-06	0.217
+7048	TGFBR2	6e-06	0.528
+6457	SH3GL3	7e-06	0.604

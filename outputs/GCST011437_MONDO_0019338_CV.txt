@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+6369	CCL24	1e-11	1.39
+83862	TMEM120A	1e-10	1.37
+311	ANXA11	1e-06	1.25

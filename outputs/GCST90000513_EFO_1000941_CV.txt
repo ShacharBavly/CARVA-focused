@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+7477	WNT7B	8e-37	1.21
+4323	MMP14	1e-12	1.12
+11214	AKAP13	3e-09	0.92

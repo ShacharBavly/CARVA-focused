@@ -1,0 +1,5 @@
+Entrez	Gene Symbol	P-value	Beta
+8558	CDK10	3e-27	1.67
+7299	TYR	2e-14	1.29
+8398	PLA2G6	2e-09	1.2
+4507	MTAP	4e-07	1.18

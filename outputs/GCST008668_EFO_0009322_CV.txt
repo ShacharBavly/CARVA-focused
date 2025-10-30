@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+256764	WDR72	1e-09	1.29
+3106	HLA-B	5e-08	1.17
+2596	GAP43	3e-06	1.52

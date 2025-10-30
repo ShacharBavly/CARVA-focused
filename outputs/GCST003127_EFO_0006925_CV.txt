@@ -1,0 +1,5 @@
+Entrez	Gene Symbol	P-value	Beta
+4018	LPA	1e-62	0.79
+94120	SYTL3	2e-13	0.18
+5071	PRKN	5e-12	0.16
+84947	SERAC1	4e-10	0.27

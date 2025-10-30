@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+2212	FCGR2A	1e-11	1.17
+149233	IL23R	7e-11	0.7
+2494	NR5A2	1e-09	0.78

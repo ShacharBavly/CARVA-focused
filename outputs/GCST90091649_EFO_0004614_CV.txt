@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+8854	ALDH1A2	1e-18	0.204199
+1071	CETP	5e-16	0.23347
+4023	LPL	2e-08	0.132809

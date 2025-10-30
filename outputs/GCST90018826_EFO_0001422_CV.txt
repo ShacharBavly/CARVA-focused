@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+217	ALDH2	1e-16	0.2797
+80339	PNPLA3	4e-15	0.2204
+9734	HDAC9	3e-08	4.6168

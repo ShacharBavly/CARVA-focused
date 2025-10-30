@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+2773	GNAI3	1e-06	1.43
+127002	ATXN7L2	6e-06	1.44
+6671	SP4	6e-06	1.82

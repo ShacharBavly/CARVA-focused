@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+51300	TIMMDC1	1e-07	1.23
+221037	JMJD1C	2e-07	1.19
+221035	REEP3	3e-07	1.18

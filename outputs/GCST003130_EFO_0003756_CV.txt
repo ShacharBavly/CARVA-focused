@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+254827	NAALADL2	4e-06	1.4
+26245	OR2M4	8e-06	1.82
+9905	SGSM2	9e-06	1.53

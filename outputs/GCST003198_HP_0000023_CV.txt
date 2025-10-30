@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+64641	EBF2	7e-15	1.11
+51352	WT1-AS	4e-14	1.11
+10283	CWC27	4e-09	1.09

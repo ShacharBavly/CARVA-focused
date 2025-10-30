@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+28	ABO	9e-10	1.28
+1012	CDH13	5e-07	1.17
+91752	ZNF804A	1e-06	1.26

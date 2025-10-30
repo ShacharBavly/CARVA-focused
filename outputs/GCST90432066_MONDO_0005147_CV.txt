@@ -1,0 +1,4 @@
+Entrez	Gene Symbol	P-value	Beta
+6311	ATXN2	6e-10	0.23
+3559	IL2RA	2e-07	0.41
+2626	GATA4	3e-06	0.17

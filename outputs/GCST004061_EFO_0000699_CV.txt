@@ -1,0 +1,5 @@
+Entrez	Gene Symbol	P-value	Beta
+3663	IRF5	3e-14	1.49
+6775	STAT4	9e-10	1.4
+5649	RELN	3e-07	1.39
+10725	NFAT5	2e-06	1.28

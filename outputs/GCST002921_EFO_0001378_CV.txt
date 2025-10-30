@@ -1,0 +1,5 @@
+Entrez	Gene Symbol	P-value	Beta
+22936	ELL2	1e-09	1.25
+8701	DNAH11	4e-08	0.2
+10043	TOM1	6e-08	1.18
+54986	ULK4	5e-07	0.24
