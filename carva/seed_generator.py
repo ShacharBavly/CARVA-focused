@@ -7,6 +7,49 @@ import pandas as pd
 import numpy as np
 from scipy.stats import gaussian_kde
 
+
+def copy_pvalues(df: pd.DataFrame, tsv_path: str, col_name: str = "P-value") -> pd.DataFrame:
+    """
+    Copy a column named `col_name` from a TSV file into an existing DataFrame.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        Target DataFrame to receive the column.
+    tsv_path : str
+        Path to the TSV file containing the column.
+    col_name : str
+        Name of the column to copy (default: "P-value").
+
+    Returns
+    -------
+    pd.DataFrame
+        The input DataFrame with the new column added.
+
+    Raises
+    ------
+    ValueError
+        If the number of rows does not match.
+    KeyError
+        If the column is missing in the TSV.
+    """
+    pvals_df = pd.read_csv(tsv_path, sep="\t")
+
+    if col_name not in pvals_df.columns:
+        raise KeyError(f"Column '{col_name}' not found in TSV file")
+
+    if len(df) != len(pvals_df):
+        raise ValueError(
+            f"Row count mismatch: df has {len(df)} rows, "
+            f"TSV has {len(pvals_df)} rows"
+        )
+
+    df[col_name] = pvals_df[col_name].values
+    return df
+
+
+
+
 def sample_like_pvalues(tsv_file, column_name, num_samples):
     df = pd.read_csv(tsv_file, sep='\t')
     values = df[column_name].dropna().to_numpy()
@@ -25,7 +68,7 @@ def sample_like_pvalues(tsv_file, column_name, num_samples):
     return samples
 
 
-def select_random_lines(input_tsv_path: str, output_tsv_path: str, n: int, pvals: str):
+def select_random_lines(input_tsv_path: str, output_tsv_path: str, n: int, pvals: str, sample:int):
     """
     Reads a TSV file, randomly selects 'n' unique lines, and writes them
     to a new TSV file.
@@ -35,6 +78,7 @@ def select_random_lines(input_tsv_path: str, output_tsv_path: str, n: int, pvals
         output_tsv_path: Path to the output TSV file.
         n: The number of random lines to select.
     """
+    print("starting")
     try:
         # 1. Read the TSV file into a pandas DataFrame.
         # 'sep='\t'' specifies that the file is Tab-Separated.
@@ -49,17 +93,19 @@ def select_random_lines(input_tsv_path: str, output_tsv_path: str, n: int, pvals
 
         if n > total_rows:
             # Throw an error and terminate if n > total rows, as requested
-            raise ValueError(
-                f"Error: Requested lines (n={n}) is greater than the total lines in the file ({total_rows})."
-            )
+            raise ValueError(f"Error: Requested lines (n={n}) is greater than the total lines in the file ({total_rows}).")
 
-        if len(df.columns == 1):
+        print(len(df.columns))
+        if len(df.columns) == 1:
             df.columns = ["Entrez"]
 
         random_selection_df = df.sample(n=n)
         if pvals:
-            random_selection_df["P-value"] = sample_like_pvalues(pvals, "P-value", n)
-        
+            if sample == 1:
+                random_selection_df["P-value"] = sample_like_pvalues(pvals, "P-value", n)
+            if sample ==2:
+                random_selection_df = copy_pvalues(random_selection_df, pvals)
+
         random_selection_df.to_csv(output_tsv_path, sep='\t', index=False)
         
         print(f"{n} random lines from {input_tsv_path} written to {output_tsv_path}")
@@ -112,5 +158,12 @@ if __name__ == "__main__":
         help="where to sample p-values from."
     )
 
+    parser.add_argument(
+        '-s', '--sample',
+        type=int,
+        required=False,
+        help="None:no sampling, 1:random sampling, 2:take from file."
+    )
+    print("parsing")
     args = parser.parse_args()
-    select_random_lines(args.input_file, args.output_file, args.num_lines, args.pvals)
+    select_random_lines(args.input_file, args.output_file, args.num_lines, args.pvals, args.sample)
